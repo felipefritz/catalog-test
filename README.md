@@ -43,7 +43,7 @@ catalogo-system/
 ├── catalog-api-gateway/   # Express Gateway
 ├── frontend/              # Aplicación React
 ├── monitoring/            # Aplicación Prometheus
-├── docker-compose.yml     # Configuración de servicios
+├── compose.yml     # Configuración de servicios
 └── README.md              # Este archivo
 ```
 
