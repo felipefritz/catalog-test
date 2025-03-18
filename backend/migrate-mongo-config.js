@@ -1,14 +1,10 @@
+require('dotenv').config();
+
 const config = {
   mongodb: {
-    url: process.env.MONGODB_URI || "mongodb://localhost:27017/catalog",
-
-    databaseName: "catalog",
-
-    options: {
-   
-    }
+    url: process.env.MONGODB_URI,
+    options: {}
   },
-
   migrationsDir: "migrations",
   changelogCollectionName: "changelog",
   lockCollectionName: "changelog_lock",
