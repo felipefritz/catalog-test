@@ -13,11 +13,6 @@ export function login(email: string, password: string) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': '*/*',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
-      // 'Accept-Encoding': 'gzip, deflate, br',
-      // Añade otros encabezados si es necesario
     },
     body: JSON.stringify({ email, password }),
   })

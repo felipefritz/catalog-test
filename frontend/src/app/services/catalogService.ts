@@ -21,7 +21,7 @@ export const CatalogAPI = createApi({
     'Catalog',
   ],
   endpoints: (builder) => ({
-    ...createCrudEndpoints(builder, { resourceUrl: 'catalog', resourceTag: 'Catalog' }),
+    ...createCrudEndpoints(builder, { resourceUrl: 'catalogs', resourceTag: 'Catalog' }),
   }),
 });
 
