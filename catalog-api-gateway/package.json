@@ -1,0 +1,14 @@
+{
+  "name": "catalog-api-gateway",
+  "description": "Express Gateway Instance Bootstraped from Command Line",
+  "repository": {},
+  "license": "UNLICENSED",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-gateway": "^1.16.11",
+    "install": "^0.13.0",
+    "prom-client": "^15.1.3"
+  }
+}

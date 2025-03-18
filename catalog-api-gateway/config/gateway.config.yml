@@ -1,0 +1,75 @@
+http:
+  port: 8080
+apiEndpoints:
+  auth:
+    url: 'http://localhost:3000'
+    paths:
+      - '/auth/login'
+      - '/auth/login/'   
+      - '/auth/register'
+    methods: ["GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS"]
+
+  catalogs:
+    url: 'http://localhost:3000'
+    paths: ['/catalogs', '/catalogs/*']
+    methods: ["GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS"]
+
+serviceEndpoints:
+  nestjsService:
+    url: 'http://localhost:3000'
+
+policies:
+  - proxy
+  - jwt
+  - rate-limit
+  - cors
+
+pipelines:
+  auth:
+    apiEndpoints:
+      - auth
+    policies:
+      - cors:
+          action:
+            origin: ["http://127.0.0.1", "http://localhost", "http://localhost:5173", "http://frontend", "http://localhost:80", "http://localhost:8080"]
+            methods: ["GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS"]
+            headers: [
+              "Content-Type", 
+              "Authorization", 
+              "Cache-Control", 
+              "Accept", 
+              "Connection", 
+            ]
+            credentials: true
+            allowCredentials: true
+            preflightContinue: false
+            optionsSuccessStatus: 204
+      - proxy:
+          action:
+            serviceEndpoint: nestjsService
+            changeOrigin: true
+
+  catalogs:
+    apiEndpoints:
+      - catalogs
+    policies:
+      - cors:
+          action:
+            origin: ["http://127.0.0.1", "http://localhost", "http://localhost:5173", "http://frontend", "http://localhost:80", "http://localhost:8080"]
+            methods: ["GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS"]
+            headers: [
+              "Content-Type", 
+              "Authorization", 
+              "Cache-Control", 
+              "Accept", 
+              "Connection", 
+            ]
+            credentials: true
+            allowCredentials: true
+            preflightContinue: false
+            optionsSuccessStatus: 204
+
+      - proxy:
+          action:
+            serviceEndpoint: nestjsService
+            changeOrigin: true

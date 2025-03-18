@@ -1,0 +1,71 @@
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: catalog-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: catalogdb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - catalog-network
+
+  api:
+    build:
+      context: ./catalogo-api
+      dockerfile: Dockerfile
+    container_name: catalog-api
+    restart: always
+    depends_on:
+      - mongodb
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://root:example@mongodb:27017/catalogdb?authSource=admin
+      - JWT_SECRET=Y8KJhsd7912hJKSADjk12983jASUDajsd
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    networks:
+      - catalog-network
+
+  gateway:
+    build:
+      context: ./catalog-api-gateway
+      dockerfile: Dockerfile
+    container_name: catalog-gateway
+    restart: always
+    depends_on:
+      - api
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "8080:8080"
+    networks:
+      - catalog-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: catalog-frontend
+    restart: always
+    depends_on:
+      - gateway
+    ports:
+      - "80:80"
+    networks:
+      - catalog-network
+
+volumes:
+  mongodb_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  catalog-network:
+    driver: bridge
