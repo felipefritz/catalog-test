@@ -17,9 +17,9 @@ services:
 
   api:
     build:
-      context: ./catalogo-api
+      context: ./backend
       dockerfile: Dockerfile
-    container_name: catalog-api
+    container_name: backend
     restart: always
     depends_on:
       - mongodb
